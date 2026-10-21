@@ -1,0 +1,11 @@
+# Variáveis de ambiente
+.env
+
+# Dependências e builds
+node_modules/
+dist/
+build/
+
+# Sistema e editor
+.DS_Store
+Thumbs.db
