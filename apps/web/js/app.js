@@ -15,13 +15,16 @@
 // "Alugado por você" e "Seu (vitalício)" aparecem só para quem
 // alugou ou comprou; para os outros, o jogo segue disponível.
 //
-// A capa é obrigatória no cadastro. Se a imagem não carregar,
-// o cartão mostra um degradê com a inicial do jogo.
+// A capa é obrigatória no cadastro: um arquivo .jpg ou .jpeg de
+// até 2 MB, enviado do computador. Ela fica só na memória do
+// navegador. Se a imagem não carregar, o cartão mostra um degradê
+// com a inicial do jogo.
 // ==========================================================
 
 // ---------- Dados ----------
 
 const PRAZO_ALUGUEL_DIAS = 30; // contados a partir do aluguel
+const TAMANHO_MAXIMO_CAPA = 2 * 1024 * 1024; // 2 MB
 
 // Situação do usuário da página em relação a cada jogo.
 const SITUACAO = {
@@ -44,7 +47,7 @@ function criarJogo(dados) {
     id: proximoId++,
     nome: dados.nome,
     genero: dados.genero,
-    capa: dados.capa, // link da imagem de capa
+    capa: dados.capa, // endereço da imagem enviada (vazio = capa reserva)
     valorAluguel: dados.valorAluguel,
     valorVenda: dados.valorVenda,
     situacao: SITUACAO.NENHUMA,
@@ -69,6 +72,7 @@ const campoValorAluguel = document.getElementById("valor-aluguel");
 const caixaVenda = document.getElementById("oferecer-venda");
 const campoValorVenda = document.getElementById("valor-venda");
 const campoCapa = document.getElementById("capa");
+const previaCapa = document.getElementById("previa-capa");
 const mensagemErro = document.getElementById("mensagem-erro");
 const listaJogos = document.getElementById("lista-jogos");
 const listaVazia = document.getElementById("lista-vazia");
@@ -242,7 +246,7 @@ function criarCapa(jogo) {
   imagem.alt = "Capa de " + jogo.nome;
   imagem.loading = "lazy";
 
-  // Se o link estiver quebrado, troca pela capa reserva.
+  // Se a imagem não carregar, troca pela capa reserva.
   imagem.addEventListener("error", function () {
     imagem.replaceWith(criarCapaReserva(jogo.nome));
   });
@@ -273,14 +277,55 @@ function somarLetras(texto) {
   return soma;
 }
 
-function linkValido(texto) {
-  try {
-    const link = new URL(texto);
-    return link.protocol === "http:" || link.protocol === "https:";
-  } catch (erro) {
-    return false;
+// ---------- Upload da capa ----------
+
+// Endereço temporário da imagem escolhida no formulário.
+let enderecoCapaEscolhida = null;
+
+// Devolve a mensagem de erro, ou "" se o arquivo estiver certo.
+function verificarArquivoCapa(arquivo) {
+  const nome = arquivo.name.toLowerCase();
+  const extensaoJpg = nome.endsWith(".jpg") || nome.endsWith(".jpeg");
+  const tipoJpg = arquivo.type === "" || arquivo.type === "image/jpeg";
+
+  if (!extensaoJpg || !tipoJpg) {
+    return "A capa precisa ser um arquivo .jpg ou .jpeg.";
   }
+  if (arquivo.size > TAMANHO_MAXIMO_CAPA) {
+    return "A capa deve ter no máximo 2 MB.";
+  }
+  return "";
 }
+
+function limparPreviaCapa() {
+  if (enderecoCapaEscolhida) {
+    URL.revokeObjectURL(enderecoCapaEscolhida);
+    enderecoCapaEscolhida = null;
+  }
+  previaCapa.hidden = true;
+  previaCapa.removeAttribute("src");
+}
+
+campoCapa.addEventListener("change", function () {
+  limparPreviaCapa();
+  campoCapa.classList.remove("invalido");
+  mensagemErro.textContent = "";
+
+  const arquivo = campoCapa.files[0];
+  if (!arquivo) {
+    return;
+  }
+
+  const erro = verificarArquivoCapa(arquivo);
+  if (erro) {
+    mostrarErro(campoCapa, erro);
+    return;
+  }
+
+  enderecoCapaEscolhida = URL.createObjectURL(arquivo);
+  previaCapa.src = enderecoCapaEscolhida;
+  previaCapa.hidden = false;
+});
 
 // ---------- Aluguel, devolução e compra ----------
 
@@ -331,6 +376,10 @@ function removerJogo(id) {
   });
 
   if (posicao !== -1 && jogos[posicao].situacao === SITUACAO.NENHUMA) {
+    // Libera da memória a imagem enviada para esse jogo.
+    if (jogos[posicao].capa.startsWith("blob:")) {
+      URL.revokeObjectURL(jogos[posicao].capa);
+    }
     jogos.splice(posicao, 1);
     renderizarLista();
   }
@@ -358,7 +407,7 @@ function validarFormulario() {
   const genero = campoGenero.value.trim();
   const valorAluguel = Number(campoValorAluguel.value);
   const valorVenda = Number(campoValorVenda.value);
-  const capa = campoCapa.value.trim();
+  const arquivoCapa = campoCapa.files[0];
 
   limparErros();
 
@@ -380,11 +429,12 @@ function validarFormulario() {
   if (caixaAluguel.checked && caixaVenda.checked && valorVenda <= valorAluguel) {
     return mostrarErro(campoValorVenda, "O valor da venda deve ser maior que o do aluguel.");
   }
-  if (capa === "") {
-    return mostrarErro(campoCapa, "Informe o link da capa.");
+  if (!arquivoCapa) {
+    return mostrarErro(campoCapa, "Escolha a imagem de capa.");
   }
-  if (!linkValido(capa)) {
-    return mostrarErro(campoCapa, "O link da capa deve começar com http:// ou https://.");
+  const erroCapa = verificarArquivoCapa(arquivoCapa);
+  if (erroCapa) {
+    return mostrarErro(campoCapa, erroCapa);
   }
 
   return {
@@ -392,7 +442,7 @@ function validarFormulario() {
     genero: genero,
     valorAluguel: caixaAluguel.checked ? valorAluguel : null,
     valorVenda: caixaVenda.checked ? valorVenda : null,
-    capa: capa,
+    capa: enderecoCapaEscolhida,
   };
 }
 
@@ -419,6 +469,11 @@ formulario.addEventListener("submit", function (evento) {
   }
 
   jogos.push(criarJogo(dados));
+
+  // A imagem agora pertence ao cartão: não pode ser liberada da memória.
+  enderecoCapaEscolhida = null;
+  limparPreviaCapa();
+
   formulario.reset();
   sincronizarModalidades();
   campoNome.focus();

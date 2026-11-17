@@ -106,6 +106,9 @@ h2 {
 .lateral {
   position: sticky;
   top: 72px;
+  /* Se o formulário não couber na tela, ele rola sozinho */
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
@@ -133,6 +136,8 @@ label {
 }
 
 input {
+  width: 100%;
+  min-width: 0; /* impede que o campo de arquivo alargue a coluna */
   font: inherit;
   font-size: 0.95rem;
   padding: 8px 10px;
@@ -150,6 +155,38 @@ input:focus {
   outline: 2px solid var(--cor-primaria);
   outline-offset: 0;
   border-color: var(--cor-primaria);
+}
+
+input[type="file"] {
+  padding: 6px;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  font: inherit;
+  font-weight: 600;
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--cor-primaria-clara);
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.previa-capa {
+  width: 100%;
+  aspect-ratio: 315 / 250;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+  margin-top: 6px;
 }
 
 input:disabled {
@@ -448,5 +485,7 @@ input[type="checkbox"].invalido {
 
   .lateral {
     position: static;
+    max-height: none;
+    overflow-y: visible;
   }
 }

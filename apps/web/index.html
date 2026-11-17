@@ -53,8 +53,9 @@
         </fieldset>
 
         <div class="campo">
-          <label for="capa">Link da capa (URL)</label>
-          <input type="url" id="capa" name="capa" placeholder="https://..." required>
+          <label for="capa">Capa (arquivo JPG, até 2 MB)</label>
+          <input type="file" id="capa" name="capa" accept=".jpg,.jpeg,image/jpeg" required>
+          <img id="previa-capa" class="previa-capa" alt="Prévia da capa escolhida" hidden>
         </div>
 
         <p id="mensagem-erro" class="mensagem-erro" role="alert"></p>
