@@ -7,23 +7,25 @@ Frontend do STAYVILE: a página onde o usuário busca um jogo, guarda a ficha, e
 A primeira versão visual é uma página única, sem framework e sem API, no estilo de vitrine de jogos: tema escuro com destaque em azul.
 
 - **Barra do topo** com o nome do projeto e o total de jogos.
-- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, quantidade disponível, modalidades (alugar e/ou vender, cada uma com seu valor) e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
-- **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o gênero, o preço de cada modalidade, o status, as cópias disponíveis e os botões **Alugar**, **Comprar**, **Devolver** e **Remover**, conforme o caso.
+- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, modalidades (alugar e/ou vender, cada uma com seu valor) e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
+- **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o gênero, o preço de cada modalidade, o status e os botões **Alugar**, **Comprar**, **Devolver** e **Remover**, conforme o caso.
 
 ### Modalidades
 
 | Modalidade | Como funciona |
 |---|---|
-| **Alugar** | Valor menor, por 72h. Usa uma cópia livre, que volta ao acervo na devolução |
-| **Vender** | Valor maior. A cópia passa a ser do jogador para sempre e não volta ao acervo |
+| **Alugar** | Valor mensal, por 30 dias a partir do aluguel. Depois, o jogo é devolvido |
+| **Vender** | Valor maior. O jogo passa a ser do jogador para sempre |
 
 O dono pode oferecer uma das modalidades ou as duas. Com as duas, o valor da venda precisa ser maior que o do aluguel.
 
+Os jogos são digitais, então não há limite de cópias nem de aluguéis por mês.
+
 ### Regras já aplicadas na página
 
-- "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo. Para os outros usuários, o jogo continua disponível enquanto houver cópias.
+- "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo. Para os outros usuários, o jogo continua disponível.
 - Cada usuário pode ter no máximo uma cópia em aberto por jogo.
-- Quem está alugando pode comprar o jogo: a cópia alugada passa a ser dele, sem usar outra.
+- Quem está alugando pode comprar o jogo: o aluguel vira compra.
 - Quem já comprou não vê mais os botões Alugar e Comprar daquele jogo.
 - Um jogo alugado ou comprado pelo usuário não pode ser removido.
 - Se o link da capa não carregar, o cartão mostra um degradê azul com a inicial do jogo.
@@ -32,6 +34,7 @@ Limites desta versão:
 
 - Ainda não há login, então a página mostra a visão de um único usuário.
 - Não há pagamento: clicar em Comprar já marca o jogo como seu.
+- O prazo de 30 dias aparece no status, mas a página ainda não conta os dias nem marca atrasos.
 - Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página. Os exemplos usam a capa reserva (degradê com a inicial).
 - A busca no RAWG fica para a API, para não expor a chave no navegador.
 
