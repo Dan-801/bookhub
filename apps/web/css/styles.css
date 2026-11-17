@@ -1,0 +1,491 @@
+/* ==========================================================
+   STAYVILE — estilos da página inicial
+   Visual de vitrine escura, com destaque em azul.
+   Os valores visuais ficam em variáveis (tokens) no :root.
+   ========================================================== */
+
+:root {
+  --cor-fundo: #0e131c;
+  --cor-superficie: #161d2a;
+  --cor-superficie-alta: #1e2737;
+  --cor-borda: #2a3447;
+  --cor-texto: #e6ebf4;
+  --cor-texto-suave: #8f9bb3;
+
+  --cor-primaria: #3b82f6;
+  --cor-primaria-escura: #2563eb;
+  --cor-primaria-clara: #93c5fd;
+
+  --cor-sucesso: #4ade80;
+  --cor-sucesso-fundo: rgba(74, 222, 128, 0.12);
+  --cor-alerta: #fbbf24;
+  --cor-alerta-fundo: rgba(251, 191, 36, 0.12);
+  --cor-erro: #f87171;
+
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --raio: 8px;
+  --espaco: 16px;
+  --largura-maxima: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.5;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* ---------- Barra do topo ---------- */
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.topo__conteudo {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 12px var(--espaco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.marca__icone {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--cor-primaria-clara), var(--cor-primaria-escura));
+}
+
+.marca__nome {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+}
+
+.contador {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+/* ---------- Layout em duas colunas ---------- */
+
+.layout {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: calc(var(--espaco) * 1.5) var(--espaco);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: calc(var(--espaco) * 1.5);
+  align-items: start;
+}
+
+/* ---------- Coluna lateral (formulário) ---------- */
+
+.lateral {
+  position: sticky;
+  top: 72px;
+  /* Se o formulário não couber na tela, ele rola sozinho */
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco);
+}
+
+.lateral__titulo {
+  margin-bottom: var(--espaco);
+}
+
+.formulario {
+  display: grid;
+  gap: 12px;
+}
+
+.campo {
+  display: grid;
+  gap: 4px;
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+input {
+  width: 100%;
+  min-width: 0; /* impede que o campo de arquivo alargue a coluna */
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+input::placeholder {
+  color: #5d687e;
+}
+
+input:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 0;
+  border-color: var(--cor-primaria);
+}
+
+input[type="file"] {
+  padding: 6px;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  font: inherit;
+  font-weight: 600;
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--cor-primaria-clara);
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.previa-capa {
+  width: 100%;
+  aspect-ratio: 315 / 250;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+  margin-top: 6px;
+}
+
+input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+input.invalido {
+  border-color: var(--cor-erro);
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+input[type="checkbox"].invalido {
+  outline: 2px solid var(--cor-erro);
+}
+
+/* ---------- Modalidades (alugar / vender) ---------- */
+
+.modalidades {
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+.modalidades legend {
+  padding: 0 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.modalidade {
+  display: grid;
+  gap: 6px;
+}
+
+.modalidade__opcao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+.mensagem-erro {
+  margin: 0;
+  min-height: 1.4em;
+  color: var(--cor-erro);
+  font-size: 0.85rem;
+}
+
+/* ---------- Botões ---------- */
+
+.botao {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.botao--primario {
+  background: var(--cor-primaria);
+  color: #ffffff;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+}
+
+.botao--primario:hover {
+  background: var(--cor-primaria-escura);
+}
+
+.botao--secundario {
+  background: transparent;
+  color: var(--cor-primaria-clara);
+  border-color: var(--cor-primaria);
+}
+
+.botao--secundario:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.botao--compra {
+  background: var(--cor-primaria);
+  color: #ffffff;
+}
+
+.botao--compra:hover {
+  background: var(--cor-primaria-escura);
+}
+
+.botao--perigo {
+  background: transparent;
+  color: var(--cor-texto-suave);
+}
+
+.botao--perigo:hover {
+  color: var(--cor-erro);
+  border-color: var(--cor-erro);
+}
+
+.botao:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.botao:disabled:hover {
+  background: transparent;
+  border-color: transparent;
+  color: var(--cor-texto-suave);
+}
+
+/* ---------- Vitrine (acervo) ---------- */
+
+.vitrine__topo {
+  margin-bottom: var(--espaco);
+}
+
+.aviso {
+  margin: 4px 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+.lista-jogos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px var(--espaco);
+}
+
+.jogo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.capa {
+  display: block;
+  width: 100%;
+  aspect-ratio: 315 / 250;
+  object-fit: cover;
+  border-radius: var(--raio);
+  background: var(--cor-superficie-alta);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s ease, transform 0.15s ease;
+}
+
+.jogo:hover .capa {
+  outline-color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+.capa--reserva {
+  display: grid;
+  place-items: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.jogo__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jogo__nome {
+  margin: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jogo__genero {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+.jogo__linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.jogo__precos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preco {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.preco__rotulo {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+.preco--aluguel {
+  color: var(--cor-primaria-clara);
+  border: 1px solid var(--cor-primaria);
+}
+
+.preco--venda {
+  color: #ffffff;
+  background: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+}
+
+.jogo__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.lista-vazia {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  text-align: center;
+  padding: calc(var(--espaco) * 2);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+/* ---------- Status do jogo ---------- */
+
+.status {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+
+.status--disponivel {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.status--alugado {
+  background: var(--cor-alerta-fundo);
+  color: var(--cor-alerta);
+}
+
+.status--comprado {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--cor-primaria-clara);
+}
+
+/* ---------- Rodapé ---------- */
+
+.rodape {
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+  padding: var(--espaco);
+  border-top: 1px solid var(--cor-borda);
+}
+
+/* ---------- Telas pequenas ---------- */
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .lateral {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}

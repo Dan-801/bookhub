@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAYVILE — Biblioteca de jogos</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo__conteudo">
+      <div class="marca">
+        <span class="marca__icone" aria-hidden="true"></span>
+        <h1 class="marca__nome">STAYVILE</h1>
+      </div>
+      <span id="contador" class="contador"></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="lateral" aria-labelledby="titulo-cadastro">
+      <h2 id="titulo-cadastro" class="lateral__titulo">Cadastrar jogo</h2>
+
+      <form id="form-jogo" class="formulario" novalidate>
+        <div class="campo">
+          <label for="nome">Nome do jogo</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex.: Hollow Knight" required>
+        </div>
+
+        <div class="campo">
+          <label for="genero">Gênero</label>
+          <input type="text" id="genero" name="genero" placeholder="Ex.: Aventura" required>
+        </div>
+
+        <fieldset class="modalidades">
+          <legend>Modalidades</legend>
+
+          <div class="modalidade">
+            <label class="modalidade__opcao">
+              <input type="checkbox" id="oferecer-aluguel" checked>
+              Alugar (30 dias)
+            </label>
+            <input type="number" id="valor-aluguel" name="valor-aluguel" min="0.01" step="0.01" placeholder="Valor por mês (R$)" aria-label="Valor do aluguel por mês (R$)">
+          </div>
+
+          <div class="modalidade">
+            <label class="modalidade__opcao">
+              <input type="checkbox" id="oferecer-venda">
+              Vender (vitalício)
+            </label>
+            <input type="number" id="valor-venda" name="valor-venda" min="0.01" step="0.01" placeholder="Valor da venda (R$)" aria-label="Valor da venda (R$)" disabled>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="capa">Capa (JPG, PNG ou WebP, até 2 MB)</label>
+          <input type="file" id="capa" name="capa" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" required>
+          <img id="previa-capa" class="previa-capa" alt="Prévia da capa escolhida" hidden>
+        </div>
+
+        <p id="mensagem-erro" class="mensagem-erro" role="alert"></p>
+
+        <button type="submit" class="botao botao--primario">Cadastrar</button>
+      </form>
+    </aside>
+
+    <main class="vitrine" aria-labelledby="titulo-acervo">
+      <div class="vitrine__topo">
+        <h2 id="titulo-acervo">Acervo</h2>
+        <p class="aviso">Visão de um usuário (ainda sem login): "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo. Para os outros, ele segue disponível.</p>
+      </div>
+
+      <ul id="lista-jogos" class="lista-jogos"></ul>
+      <p id="lista-vazia" class="lista-vazia" hidden>Nenhum jogo cadastrado ainda.</p>
+    </main>
+  </div>
+
+  <footer class="rodape">
+    <p>STAYVILE · projeto do curso DevHub (BookHub)</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
