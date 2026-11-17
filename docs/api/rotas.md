@@ -675,5 +675,6 @@ As rotas registram o aluguel e a compra, mas não cobram nada. Pagamento, repass
 - **ADR do marketplace:** a decisão de que qualquer usuário anuncia os próprios jogos (com aluguel e venda) também precisa de ADR.
 - **Quem cuida dos gêneros:** os gêneros são criados sozinhos quando alguém anuncia um jogo. Criar, renomear e excluir gêneros pelas rotas próprias continua só com o admin.
 - **Suspenso pode comprar?** Este documento considera que não: a suspensão por atraso bloqueia aluguel e compra. Falta confirmar se quem está com o próprio aluguel atrasado pode comprar aquele jogo para encerrar o atraso.
+- **Capa enviada pelo dono:** na página, o dono envia a capa como arquivo `.jpg`/`.jpeg` de até 2 MB. Aqui, a capa ainda vem do RAWG (`cover_url`). Para a API aceitar upload, falta decidir onde guardar os arquivos (pasta no servidor ou serviço de armazenamento) e se a capa enviada substitui a do RAWG.
 - **Reativação:** não há rota para reativar conta desativada ou anúncio retirado. Por causa do `rawg_id` único por dono, quem retirou um anúncio não pode anunciar o mesmo jogo de novo.
 - **Tamanhos de campo:** os limites de caracteres (nome até 100, senha com no mínimo 8, gênero até 50) são uma sugestão inicial.

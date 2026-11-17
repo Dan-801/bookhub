@@ -7,7 +7,7 @@ Frontend do STAYVILE: a página onde o usuário busca um jogo, guarda a ficha, e
 A primeira versão visual é uma página única, sem framework e sem API, no estilo de vitrine de jogos: tema escuro com destaque em azul.
 
 - **Barra do topo** com o nome do projeto e o total de jogos.
-- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, modalidades (alugar e/ou vender, cada uma com seu valor) e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
+- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, modalidades (alugar e/ou vender, cada uma com seu valor) e a capa, enviada como arquivo `.jpg` ou `.jpeg` de até 2 MB, com prévia antes de cadastrar. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
 - **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o gênero, o preço de cada modalidade, o status e os botões **Alugar**, **Comprar**, **Devolver** e **Remover**, conforme o caso.
 
 ### Modalidades
@@ -28,14 +28,14 @@ Os jogos são digitais, então não há limite de cópias nem de aluguéis por m
 - Quem está alugando pode comprar o jogo: o aluguel vira compra.
 - Quem já comprou não vê mais os botões Alugar e Comprar daquele jogo.
 - Um jogo alugado ou comprado pelo usuário não pode ser removido.
-- Se o link da capa não carregar, o cartão mostra um degradê azul com a inicial do jogo.
+- Se a imagem da capa não carregar, o cartão mostra um degradê azul com a inicial do jogo.
 
 Limites desta versão:
 
 - Ainda não há login, então a página mostra a visão de um único usuário. Ela ainda não separa o dono do anúncio de quem aluga ou compra: na API, o dono não pode alugar nem comprar o próprio jogo (ver [rotas da API](../../docs/api/rotas.md)).
 - Não há pagamento: clicar em Comprar já marca o jogo como seu.
 - O prazo de 30 dias aparece no status, mas a página ainda não conta os dias nem marca atrasos.
-- Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página. Os exemplos usam a capa reserva (degradê com a inicial).
+- Os jogos e as capas enviadas ficam só na memória do navegador e voltam para os 3 exemplos ao recarregar a página. Nenhum arquivo é enviado para servidor. Os exemplos usam a capa reserva (degradê com a inicial).
 - A busca no RAWG fica para a API, para não expor a chave no navegador.
 
 ## Organização dos arquivos
