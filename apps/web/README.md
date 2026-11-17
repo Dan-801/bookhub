@@ -4,22 +4,23 @@ Frontend do STAYVILE: a página onde o usuário busca um jogo, guarda a ficha, e
 
 ## Versão atual: HTML, CSS e JavaScript puros
 
-A primeira versão visual é uma página única, sem framework e sem API:
+A primeira versão visual é uma página única, sem framework e sem API, no estilo de vitrine de jogos: tema escuro com destaque em azul.
 
-- **Título** com o nome do projeto.
-- **Formulário "Cadastrar jogo"** com nome, gênero, quantidade disponível e valor do aluguel. Os campos são validados antes de entrar na lista.
-- **Acervo** com um cartão por jogo, mostrando status, cópias disponíveis, valor e os botões **Emprestar/Devolver** e **Remover**.
+- **Barra do topo** com o nome do projeto e o total de jogos.
+- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, quantidade disponível, valor do aluguel e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
+- **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o valor, o gênero, o status, as cópias disponíveis e os botões **Emprestar/Devolver** e **Remover**.
 
 Regras já aplicadas na página:
 
 - "Emprestado por você" aparece só para quem está com o jogo. Para os outros usuários, o jogo continua disponível enquanto houver cópias.
 - Cada usuário pode ter no máximo uma cópia em aberto por jogo.
 - Um jogo emprestado não pode ser removido antes da devolução.
+- Se o link da capa não carregar, o cartão mostra um degradê azul com a inicial do jogo.
 
 Limites desta versão:
 
 - Ainda não há login, então a página mostra a visão de um único usuário.
-- Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página.
+- Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página. Os exemplos usam a capa reserva (degradê com a inicial).
 - A busca no RAWG fica para a API, para não expor a chave no navegador.
 
 ## Organização dos arquivos
