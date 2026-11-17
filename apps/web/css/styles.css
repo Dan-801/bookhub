@@ -245,6 +245,32 @@ input.invalido {
   gap: 6px;
 }
 
+.capa {
+  display: block;
+  width: 100%;
+  aspect-ratio: 315 / 250;
+  object-fit: cover;
+  border-radius: var(--raio);
+  background: var(--cor-superficie-alta);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s ease, transform 0.15s ease;
+}
+
+.jogo:hover .capa {
+  outline-color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+.capa--reserva {
+  display: grid;
+  place-items: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
 .jogo__corpo {
   display: flex;
   flex-direction: column;
