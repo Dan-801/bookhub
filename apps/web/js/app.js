@@ -64,27 +64,39 @@ function criarItemJogo(jogo) {
   const item = document.createElement("li");
   item.className = "jogo";
 
+  const corpo = document.createElement("div");
+  corpo.className = "jogo__corpo";
+
+  // Linha 1: nome + preço
+  const linhaNome = document.createElement("div");
+  linhaNome.className = "jogo__linha";
+
   const nome = document.createElement("h3");
   nome.className = "jogo__nome";
   nome.textContent = jogo.nome;
+  nome.title = jogo.nome;
 
+  const preco = document.createElement("span");
+  preco.className = "preco";
+  preco.textContent = formatarReais.format(jogo.valor);
+
+  linhaNome.append(nome, preco);
+
+  // Linha 2: gênero
   const genero = document.createElement("p");
   genero.className = "jogo__genero";
   genero.textContent = jogo.genero;
 
-  const detalhes = document.createElement("p");
-  detalhes.className = "jogo__detalhes";
+  // Linha 3: status + cópias disponíveis
+  const linhaStatus = document.createElement("div");
+  linhaStatus.className = "jogo__linha";
 
   const quantidade = document.createElement("span");
+  quantidade.className = "jogo__quantidade";
   quantidade.textContent =
     jogo.quantidade + (jogo.quantidade === 1 ? " disponível" : " disponíveis");
 
-  const valor = document.createElement("strong");
-  valor.textContent = formatarReais.format(jogo.valor);
-
-  detalhes.append(quantidade, valor);
-
-  const status = criarStatus(jogo);
+  linhaStatus.append(criarStatus(jogo), quantidade);
 
   const acoes = document.createElement("div");
   acoes.className = "jogo__acoes";
@@ -119,7 +131,8 @@ function criarItemJogo(jogo) {
   });
 
   acoes.append(botaoEmprestimo, botaoRemover);
-  item.append(nome, genero, status, detalhes, acoes);
+  corpo.append(linhaNome, genero, linhaStatus, acoes);
+  item.append(corpo);
   return item;
 }
 
