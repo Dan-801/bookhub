@@ -13,3 +13,7 @@ A página registra empréstimo, devolução e mostra os atrasados.
 ## MVP
 
 Buscar um jogo, guardar a ficha, emprestar e devolver pela página, com o status do empréstimo sempre visível.
+
+## Frontend
+
+A primeira versão visual (HTML, CSS e JavaScript) está em [apps/web/](apps/web/). O README da pasta explica o que a página faz e como abrir.
