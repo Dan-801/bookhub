@@ -7,7 +7,7 @@ Frontend do STAYVILE: a página onde o usuário busca um jogo, guarda a ficha, e
 A primeira versão visual é uma página única, sem framework e sem API, no estilo de vitrine de jogos: tema escuro com destaque em azul.
 
 - **Barra do topo** com o nome do projeto e o total de jogos.
-- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, modalidades (alugar e/ou vender, cada uma com seu valor) e a capa, enviada como arquivo `.jpg` ou `.jpeg` de até 2 MB, com prévia antes de cadastrar. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
+- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, modalidades (alugar e/ou vender, cada uma com seu valor) e a capa, enviada como arquivo `.jpg`, `.jpeg`, `.png` ou `.webp` de até 2 MB, com prévia antes de cadastrar. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
 - **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o gênero, o preço de cada modalidade, o status e os botões **Alugar**, **Comprar**, **Devolver** e **Remover**, conforme o caso.
 
 ### Modalidades

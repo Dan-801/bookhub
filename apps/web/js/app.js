@@ -15,8 +15,8 @@
 // "Alugado por você" e "Seu (vitalício)" aparecem só para quem
 // alugou ou comprou; para os outros, o jogo segue disponível.
 //
-// A capa é obrigatória no cadastro: um arquivo .jpg ou .jpeg de
-// até 2 MB, enviado do computador. Ela fica só na memória do
+// A capa é obrigatória no cadastro: um arquivo .jpg, .jpeg, .png
+// ou .webp de até 2 MB, enviado do computador. Ela fica só na memória do
 // navegador. Se a imagem não carregar, o cartão mostra um degradê
 // com a inicial do jogo.
 // ==========================================================
@@ -25,6 +25,14 @@
 
 const PRAZO_ALUGUEL_DIAS = 30; // contados a partir do aluguel
 const TAMANHO_MAXIMO_CAPA = 2 * 1024 * 1024; // 2 MB
+
+// Formatos aceitos para a capa: extensão do arquivo -> tipo de imagem.
+const FORMATOS_CAPA = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+};
 
 // Situação do usuário da página em relação a cada jogo.
 const SITUACAO = {
@@ -285,11 +293,13 @@ let enderecoCapaEscolhida = null;
 // Devolve a mensagem de erro, ou "" se o arquivo estiver certo.
 function verificarArquivoCapa(arquivo) {
   const nome = arquivo.name.toLowerCase();
-  const extensaoJpg = nome.endsWith(".jpg") || nome.endsWith(".jpeg");
-  const tipoJpg = arquivo.type === "" || arquivo.type === "image/jpeg";
+  const ponto = nome.lastIndexOf(".");
+  const extensao = ponto === -1 ? "" : nome.slice(ponto);
+  const tipoEsperado = FORMATOS_CAPA[extensao];
 
-  if (!extensaoJpg || !tipoJpg) {
-    return "A capa precisa ser um arquivo .jpg ou .jpeg.";
+  // A extensão precisa estar na lista e combinar com o tipo do arquivo.
+  if (!tipoEsperado || (arquivo.type !== "" && arquivo.type !== tipoEsperado)) {
+    return "A capa precisa ser um arquivo .jpg, .jpeg, .png ou .webp.";
   }
   if (arquivo.size > TAMANHO_MAXIMO_CAPA) {
     return "A capa deve ter no máximo 2 MB.";
