@@ -3,14 +3,17 @@
 // Os jogos ficam só na memória: ao recarregar a página,
 // a lista volta para os exemplos iniciais.
 //
-// Modalidades: o dono do jogo pode oferecer ALUGUEL (valor menor,
-// por 72h, depois devolve) e/ou VENDA (valor maior, o jogo fica
-// com o jogador para sempre). Com as duas, a venda custa mais.
+// Modalidades: o dono do jogo pode oferecer ALUGUEL (valor mensal,
+// por 30 dias a partir do aluguel, depois devolve) e/ou VENDA
+// (valor maior, o jogo fica com o jogador para sempre). Com as
+// duas, a venda custa mais.
+//
+// Os jogos são digitais: não há limite de cópias. A única regra é
+// uma cópia em aberto por jogo para cada usuário.
 //
 // Ainda não há login: a página mostra a visão de UM usuário.
 // "Alugado por você" e "Seu (vitalício)" aparecem só para quem
-// alugou ou comprou; para os outros, o jogo segue disponível
-// enquanto houver cópias.
+// alugou ou comprou; para os outros, o jogo segue disponível.
 //
 // A capa é obrigatória no cadastro. Se a imagem não carregar,
 // o cartão mostra um degradê com a inicial do jogo.
@@ -18,7 +21,7 @@
 
 // ---------- Dados ----------
 
-const PRAZO_ALUGUEL_HORAS = 72;
+const PRAZO_ALUGUEL_DIAS = 30; // contados a partir do aluguel
 
 // Situação do usuário da página em relação a cada jogo.
 const SITUACAO = {
@@ -30,9 +33,9 @@ const SITUACAO = {
 let proximoId = 1;
 
 const jogos = [
-  criarJogo({ nome: "Hollow Knight", genero: "Metroidvania", quantidade: 3, valorAluguel: 9.9, valorVenda: 79.9, capa: "" }),
-  criarJogo({ nome: "Stardew Valley", genero: "Simulação", quantidade: 2, valorAluguel: 7.5, valorVenda: null, capa: "" }),
-  criarJogo({ nome: "Celeste", genero: "Plataforma", quantidade: 1, valorAluguel: null, valorVenda: 59.9, capa: "" }),
+  criarJogo({ nome: "Hollow Knight", genero: "Metroidvania", valorAluguel: 9.9, valorVenda: 79.9, capa: "" }),
+  criarJogo({ nome: "Stardew Valley", genero: "Simulação", valorAluguel: 7.5, valorVenda: null, capa: "" }),
+  criarJogo({ nome: "Celeste", genero: "Plataforma", valorAluguel: null, valorVenda: 59.9, capa: "" }),
 ];
 
 // valorAluguel ou valorVenda = null quando a modalidade não é oferecida.
@@ -42,7 +45,6 @@ function criarJogo(dados) {
     nome: dados.nome,
     genero: dados.genero,
     capa: dados.capa, // link da imagem de capa
-    quantidade: dados.quantidade, // cópias livres para alugar ou comprar
     valorAluguel: dados.valorAluguel,
     valorVenda: dados.valorVenda,
     situacao: SITUACAO.NENHUMA,
@@ -62,7 +64,6 @@ function ofereceVenda(jogo) {
 const formulario = document.getElementById("form-jogo");
 const campoNome = document.getElementById("nome");
 const campoGenero = document.getElementById("genero");
-const campoQuantidade = document.getElementById("quantidade");
 const caixaAluguel = document.getElementById("oferecer-aluguel");
 const campoValorAluguel = document.getElementById("valor-aluguel");
 const caixaVenda = document.getElementById("oferecer-venda");
@@ -117,7 +118,7 @@ function criarItemJogo(jogo) {
 
   if (ofereceAluguel(jogo)) {
     precos.appendChild(
-      criarPreco("Alugar", formatarReais.format(jogo.valorAluguel) + " / " + PRAZO_ALUGUEL_HORAS + "h", "preco--aluguel")
+      criarPreco("Alugar", formatarReais.format(jogo.valorAluguel) + " / mês", "preco--aluguel")
     );
   }
   if (ofereceVenda(jogo)) {
@@ -126,18 +127,7 @@ function criarItemJogo(jogo) {
     );
   }
 
-  // Status + cópias disponíveis
-  const linhaStatus = document.createElement("div");
-  linhaStatus.className = "jogo__linha";
-
-  const quantidade = document.createElement("span");
-  quantidade.className = "jogo__quantidade";
-  quantidade.textContent =
-    jogo.quantidade + (jogo.quantidade === 1 ? " disponível" : " disponíveis");
-
-  linhaStatus.append(criarStatus(jogo), quantidade);
-
-  corpo.append(nome, genero, precos, linhaStatus, criarAcoes(jogo));
+  corpo.append(nome, genero, precos, criarStatus(jogo), criarAcoes(jogo));
   item.append(capa, corpo);
   return item;
 }
@@ -166,13 +156,10 @@ function criarStatus(jogo) {
     status.textContent = "Seu (vitalício)";
   } else if (jogo.situacao === SITUACAO.ALUGADO) {
     status.classList.add("status--alugado");
-    status.textContent = "Alugado por você";
-  } else if (jogo.quantidade > 0) {
+    status.textContent = "Alugado por você · " + PRAZO_ALUGUEL_DIAS + " dias";
+  } else {
     status.classList.add("status--disponivel");
     status.textContent = "Disponível";
-  } else {
-    status.classList.add("status--indisponivel");
-    status.textContent = "Indisponível";
   }
 
   return status;
@@ -192,22 +179,21 @@ function criarBotao(texto, classe, aoClicar) {
 function criarAcoes(jogo) {
   const acoes = document.createElement("div");
   acoes.className = "jogo__acoes";
-  const semCopias = jogo.quantidade === 0;
 
   if (jogo.situacao === SITUACAO.NENHUMA) {
     if (ofereceAluguel(jogo)) {
-      const botaoAlugar = criarBotao("Alugar", "botao--secundario", function () {
-        alugarJogo(jogo.id);
-      });
-      botaoAlugar.disabled = semCopias;
-      acoes.appendChild(botaoAlugar);
+      acoes.appendChild(
+        criarBotao("Alugar", "botao--secundario", function () {
+          alugarJogo(jogo.id);
+        })
+      );
     }
     if (ofereceVenda(jogo)) {
-      const botaoComprar = criarBotao("Comprar", "botao--compra", function () {
-        comprarJogo(jogo.id);
-      });
-      botaoComprar.disabled = semCopias;
-      acoes.appendChild(botaoComprar);
+      acoes.appendChild(
+        criarBotao("Comprar", "botao--compra", function () {
+          comprarJogo(jogo.id);
+        })
+      );
     }
   }
 
@@ -222,7 +208,7 @@ function criarAcoes(jogo) {
       const botaoComprar = criarBotao("Comprar", "botao--compra", function () {
         comprarJogo(jogo.id);
       });
-      botaoComprar.title = "A cópia alugada passa a ser sua.";
+      botaoComprar.title = "O jogo alugado passa a ser seu.";
       acoes.appendChild(botaoComprar);
     }
   }
@@ -308,11 +294,10 @@ function alugarJogo(id) {
   const jogo = buscarJogo(id);
 
   // Uma cópia em aberto por jogo para cada usuário.
-  if (!jogo || !ofereceAluguel(jogo) || jogo.situacao !== SITUACAO.NENHUMA || jogo.quantidade === 0) {
+  if (!jogo || !ofereceAluguel(jogo) || jogo.situacao !== SITUACAO.NENHUMA) {
     return;
   }
 
-  jogo.quantidade -= 1;
   jogo.situacao = SITUACAO.ALUGADO;
   renderizarLista();
 }
@@ -324,7 +309,6 @@ function devolverJogo(id) {
     return;
   }
 
-  jogo.quantidade += 1;
   jogo.situacao = SITUACAO.NENHUMA;
   renderizarLista();
 }
@@ -336,15 +320,7 @@ function comprarJogo(id) {
     return;
   }
 
-  // Quem está alugando fica com a mesma cópia: não usa outra.
-  if (jogo.situacao === SITUACAO.NENHUMA) {
-    if (jogo.quantidade === 0) {
-      return;
-    }
-    jogo.quantidade -= 1;
-  }
-
-  // A cópia vendida não volta para o acervo.
+  // Vale também para quem está alugando: o aluguel vira compra.
   jogo.situacao = SITUACAO.COMPRADO;
   renderizarLista();
 }
@@ -380,7 +356,6 @@ caixaVenda.addEventListener("change", sincronizarModalidades);
 function validarFormulario() {
   const nome = campoNome.value.trim();
   const genero = campoGenero.value.trim();
-  const quantidade = Number(campoQuantidade.value);
   const valorAluguel = Number(campoValorAluguel.value);
   const valorVenda = Number(campoValorVenda.value);
   const capa = campoCapa.value.trim();
@@ -392,9 +367,6 @@ function validarFormulario() {
   }
   if (genero === "") {
     return mostrarErro(campoGenero, "Informe o gênero do jogo.");
-  }
-  if (campoQuantidade.value === "" || !Number.isInteger(quantidade) || quantidade < 1) {
-    return mostrarErro(campoQuantidade, "A quantidade deve ser um número inteiro maior que zero.");
   }
   if (!caixaAluguel.checked && !caixaVenda.checked) {
     return mostrarErro(caixaAluguel, "Marque pelo menos uma modalidade: alugar ou vender.");
@@ -418,7 +390,6 @@ function validarFormulario() {
   return {
     nome: nome,
     genero: genero,
-    quantidade: quantidade,
     valorAluguel: caixaAluguel.checked ? valorAluguel : null,
     valorVenda: caixaVenda.checked ? valorVenda : null,
     capa: capa,
@@ -434,7 +405,7 @@ function mostrarErro(campo, texto) {
 
 function limparErros() {
   mensagemErro.textContent = "";
-  [campoNome, campoGenero, campoQuantidade, caixaAluguel, campoValorAluguel, campoValorVenda, campoCapa].forEach(function (campo) {
+  [campoNome, campoGenero, caixaAluguel, campoValorAluguel, campoValorVenda, campoCapa].forEach(function (campo) {
     campo.classList.remove("invalido");
   });
 }

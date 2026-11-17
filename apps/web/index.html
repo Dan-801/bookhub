@@ -32,20 +32,15 @@
           <input type="text" id="genero" name="genero" placeholder="Ex.: Aventura" required>
         </div>
 
-        <div class="campo">
-          <label for="quantidade">Quantidade disponível</label>
-          <input type="number" id="quantidade" name="quantidade" min="1" step="1" placeholder="Ex.: 3" required>
-        </div>
-
         <fieldset class="modalidades">
           <legend>Modalidades</legend>
 
           <div class="modalidade">
             <label class="modalidade__opcao">
               <input type="checkbox" id="oferecer-aluguel" checked>
-              Alugar por 72h
+              Alugar (30 dias)
             </label>
-            <input type="number" id="valor-aluguel" name="valor-aluguel" min="0.01" step="0.01" placeholder="Valor do aluguel (R$)" aria-label="Valor do aluguel (R$)">
+            <input type="number" id="valor-aluguel" name="valor-aluguel" min="0.01" step="0.01" placeholder="Valor por mês (R$)" aria-label="Valor do aluguel por mês (R$)">
           </div>
 
           <div class="modalidade">
@@ -71,7 +66,7 @@
     <main class="vitrine" aria-labelledby="titulo-acervo">
       <div class="vitrine__topo">
         <h2 id="titulo-acervo">Acervo</h2>
-        <p class="aviso">Visão de um usuário (ainda sem login): "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo.</p>
+        <p class="aviso">Visão de um usuário (ainda sem login): "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo. Para os outros, ele segue disponível.</p>
       </div>
 
       <ul id="lista-jogos" class="lista-jogos"></ul>

@@ -355,11 +355,6 @@ input[type="checkbox"].invalido {
   gap: 8px;
 }
 
-.jogo__quantidade {
-  color: var(--cor-texto-suave);
-  font-size: 0.8rem;
-}
-
 .jogo__precos {
   display: flex;
   flex-wrap: wrap;
@@ -412,6 +407,7 @@ input[type="checkbox"].invalido {
 /* ---------- Status do jogo ---------- */
 
 .status {
+  align-self: flex-start;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 1px 8px;
@@ -431,11 +427,6 @@ input[type="checkbox"].invalido {
 .status--comprado {
   background: rgba(59, 130, 246, 0.18);
   color: var(--cor-primaria-clara);
-}
-
-.status--indisponivel {
-  background: var(--cor-superficie-alta);
-  color: var(--cor-texto-suave);
 }
 
 /* ---------- Rodapé ---------- */
