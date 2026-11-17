@@ -1,0 +1,259 @@
+/* ==========================================================
+   STAYVILE — estilos da página inicial
+   Os valores visuais ficam em variáveis (tokens) no :root.
+   ========================================================== */
+
+:root {
+  --cor-fundo: #f4f3fa;
+  --cor-superficie: #ffffff;
+  --cor-texto: #1f1d2b;
+  --cor-texto-suave: #5c5a6e;
+  --cor-borda: #dcdae8;
+  --cor-primaria: #5b3fd1;
+  --cor-primaria-escura: #4529b0;
+  --cor-sucesso: #1d7a4c;
+  --cor-sucesso-fundo: #e3f4ea;
+  --cor-alerta: #9a5b00;
+  --cor-alerta-fundo: #fdf0dc;
+  --cor-erro: #b3261e;
+
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --raio: 12px;
+  --espaco: 16px;
+  --sombra: 0 2px 8px rgba(31, 29, 43, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.5;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.cabecalho {
+  background: var(--cor-primaria);
+  color: #ffffff;
+  padding: calc(var(--espaco) * 2) var(--espaco);
+  text-align: center;
+}
+
+.cabecalho__titulo {
+  margin: 0;
+  font-size: 2.25rem;
+  letter-spacing: 0.08em;
+}
+
+.cabecalho__subtitulo {
+  margin: 4px 0 0;
+  opacity: 0.9;
+}
+
+/* ---------- Conteúdo ---------- */
+
+.conteudo {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: calc(var(--espaco) * 1.5) var(--espaco);
+  display: grid;
+  gap: calc(var(--espaco) * 1.5);
+}
+
+.cartao {
+  background: var(--cor-superficie);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: calc(var(--espaco) * 1.5);
+}
+
+.cartao h2 {
+  margin: 0 0 var(--espaco);
+  font-size: 1.25rem;
+}
+
+/* ---------- Formulário ---------- */
+
+.formulario {
+  display: grid;
+  gap: var(--espaco);
+}
+
+.campo {
+  display: grid;
+  gap: 6px;
+}
+
+.campo-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco);
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--cor-texto);
+}
+
+input:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+  border-color: var(--cor-primaria);
+}
+
+input.invalido {
+  border-color: var(--cor-erro);
+}
+
+.mensagem-erro {
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--cor-erro);
+  font-size: 0.9rem;
+}
+
+/* ---------- Botões ---------- */
+
+.botao {
+  font: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.botao--primario {
+  background: var(--cor-primaria);
+  color: #ffffff;
+  justify-self: start;
+}
+
+.botao--primario:hover {
+  background: var(--cor-primaria-escura);
+}
+
+.botao--secundario {
+  background: transparent;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+}
+
+.botao--secundario:hover {
+  background: var(--cor-fundo);
+}
+
+.botao--perigo {
+  background: transparent;
+  color: var(--cor-erro);
+  border: 1px solid transparent;
+}
+
+.botao--perigo:hover {
+  border-color: var(--cor-erro);
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Acervo ---------- */
+
+.acervo__topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaco);
+}
+
+.contador {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.lista-jogos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espaco);
+}
+
+.jogo {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jogo__nome {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.jogo__genero {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.jogo__detalhes {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.jogo__acoes {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lista-vazia {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  text-align: center;
+  padding: var(--espaco);
+}
+
+/* ---------- Rodapé ---------- */
+
+.rodape {
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+  padding: var(--espaco);
+}
+
+/* ---------- Telas pequenas ---------- */
+
+@media (max-width: 560px) {
+  .campo-linha {
+    grid-template-columns: 1fr;
+  }
+
+  .botao--primario {
+    justify-self: stretch;
+  }
+}
