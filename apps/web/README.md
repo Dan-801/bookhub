@@ -7,19 +7,31 @@ Frontend do STAYVILE: a página onde o usuário busca um jogo, guarda a ficha, e
 A primeira versão visual é uma página única, sem framework e sem API, no estilo de vitrine de jogos: tema escuro com destaque em azul.
 
 - **Barra do topo** com o nome do projeto e o total de jogos.
-- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, quantidade disponível, valor do aluguel e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
-- **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o valor, o gênero, o status, as cópias disponíveis e os botões **Emprestar/Devolver** e **Remover**.
+- **Formulário "Cadastrar jogo"**, numa coluna lateral, com nome, gênero, quantidade disponível, modalidades (alugar e/ou vender, cada uma com seu valor) e link da capa. Todos os campos são obrigatórios e validados antes de o jogo entrar na lista.
+- **Acervo** em grade de cartões. Cada cartão mostra a capa, o nome, o gênero, o preço de cada modalidade, o status, as cópias disponíveis e os botões **Alugar**, **Comprar**, **Devolver** e **Remover**, conforme o caso.
 
-Regras já aplicadas na página:
+### Modalidades
 
-- "Emprestado por você" aparece só para quem está com o jogo. Para os outros usuários, o jogo continua disponível enquanto houver cópias.
+| Modalidade | Como funciona |
+|---|---|
+| **Alugar** | Valor menor, por 72h. Usa uma cópia livre, que volta ao acervo na devolução |
+| **Vender** | Valor maior. A cópia passa a ser do jogador para sempre e não volta ao acervo |
+
+O dono pode oferecer uma das modalidades ou as duas. Com as duas, o valor da venda precisa ser maior que o do aluguel.
+
+### Regras já aplicadas na página
+
+- "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo. Para os outros usuários, o jogo continua disponível enquanto houver cópias.
 - Cada usuário pode ter no máximo uma cópia em aberto por jogo.
-- Um jogo emprestado não pode ser removido antes da devolução.
+- Quem está alugando pode comprar o jogo: a cópia alugada passa a ser dele, sem usar outra.
+- Quem já comprou não vê mais os botões Alugar e Comprar daquele jogo.
+- Um jogo alugado ou comprado pelo usuário não pode ser removido.
 - Se o link da capa não carregar, o cartão mostra um degradê azul com a inicial do jogo.
 
 Limites desta versão:
 
 - Ainda não há login, então a página mostra a visão de um único usuário.
+- Não há pagamento: clicar em Comprar já marca o jogo como seu.
 - Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página. Os exemplos usam a capa reserva (degradê com a inicial).
 - A busca no RAWG fica para a API, para não expor a chave no navegador.
 
@@ -29,7 +41,7 @@ Limites desta versão:
 |---|---|
 | [index.html](index.html) | Estrutura da página: cabeçalho, formulário e listagem |
 | [css/styles.css](css/styles.css) | Estilização, com cores e espaçamentos em variáveis no `:root` |
-| [js/app.js](js/app.js) | Interações: validação, cadastro, empréstimo, devolução e remoção |
+| [js/app.js](js/app.js) | Interações: validação, cadastro, aluguel, devolução, compra e remoção |
 
 As pastas abaixo continuam reservadas para quando o frontend passar a usar um framework:
 
