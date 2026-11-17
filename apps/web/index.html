@@ -37,10 +37,25 @@
           <input type="number" id="quantidade" name="quantidade" min="1" step="1" placeholder="Ex.: 3" required>
         </div>
 
-        <div class="campo">
-          <label for="valor">Valor do aluguel (R$)</label>
-          <input type="number" id="valor" name="valor" min="0.01" step="0.01" placeholder="Ex.: 9,90" required>
-        </div>
+        <fieldset class="modalidades">
+          <legend>Modalidades</legend>
+
+          <div class="modalidade">
+            <label class="modalidade__opcao">
+              <input type="checkbox" id="oferecer-aluguel" checked>
+              Alugar por 72h
+            </label>
+            <input type="number" id="valor-aluguel" name="valor-aluguel" min="0.01" step="0.01" placeholder="Valor do aluguel (R$)" aria-label="Valor do aluguel (R$)">
+          </div>
+
+          <div class="modalidade">
+            <label class="modalidade__opcao">
+              <input type="checkbox" id="oferecer-venda">
+              Vender (vitalício)
+            </label>
+            <input type="number" id="valor-venda" name="valor-venda" min="0.01" step="0.01" placeholder="Valor da venda (R$)" aria-label="Valor da venda (R$)" disabled>
+          </div>
+        </fieldset>
 
         <div class="campo">
           <label for="capa">Link da capa (URL)</label>
@@ -56,7 +71,7 @@
     <main class="vitrine" aria-labelledby="titulo-acervo">
       <div class="vitrine__topo">
         <h2 id="titulo-acervo">Acervo</h2>
-        <p class="aviso">Visão de um usuário (ainda sem login): "Emprestado por você" aparece só para quem está com o jogo.</p>
+        <p class="aviso">Visão de um usuário (ainda sem login): "Alugado por você" e "Seu (vitalício)" aparecem só para quem alugou ou comprou o jogo.</p>
       </div>
 
       <ul id="lista-jogos" class="lista-jogos"></ul>

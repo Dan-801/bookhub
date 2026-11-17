@@ -152,8 +152,56 @@ input:focus {
   border-color: var(--cor-primaria);
 }
 
+input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 input.invalido {
   border-color: var(--cor-erro);
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+input[type="checkbox"].invalido {
+  outline: 2px solid var(--cor-erro);
+}
+
+/* ---------- Modalidades (alugar / vender) ---------- */
+
+.modalidades {
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+.modalidades legend {
+  padding: 0 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.modalidade {
+  display: grid;
+  gap: 6px;
+}
+
+.modalidade__opcao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--cor-texto);
+  cursor: pointer;
 }
 
 .mensagem-erro {
@@ -195,6 +243,15 @@ input.invalido {
 
 .botao--secundario:hover {
   background: rgba(59, 130, 246, 0.15);
+}
+
+.botao--compra {
+  background: var(--cor-primaria);
+  color: #ffffff;
+}
+
+.botao--compra:hover {
+  background: var(--cor-primaria-escura);
 }
 
 .botao--perigo {
@@ -303,17 +360,42 @@ input.invalido {
   font-size: 0.8rem;
 }
 
+.jogo__precos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .preco {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
   font-size: 0.8rem;
-  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.preco__rotulo {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+.preco--aluguel {
   color: var(--cor-primaria-clara);
   border: 1px solid var(--cor-primaria);
-  border-radius: 4px;
-  padding: 1px 8px;
+}
+
+.preco--venda {
+  color: #ffffff;
+  background: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
 }
 
 .jogo__acoes {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 2px;
 }
@@ -341,9 +423,14 @@ input.invalido {
   color: var(--cor-sucesso);
 }
 
-.status--emprestado {
+.status--alugado {
   background: var(--cor-alerta-fundo);
   color: var(--cor-alerta);
+}
+
+.status--comprado {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--cor-primaria-clara);
 }
 
 .status--indisponivel {
