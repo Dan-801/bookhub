@@ -32,7 +32,7 @@ Os jogos são digitais, então não há limite de cópias nem de aluguéis por m
 
 Limites desta versão:
 
-- Ainda não há login, então a página mostra a visão de um único usuário.
+- Ainda não há login, então a página mostra a visão de um único usuário. Ela ainda não separa o dono do anúncio de quem aluga ou compra: na API, o dono não pode alugar nem comprar o próprio jogo (ver [rotas da API](../../docs/api/rotas.md)).
 - Não há pagamento: clicar em Comprar já marca o jogo como seu.
 - O prazo de 30 dias aparece no status, mas a página ainda não conta os dias nem marca atrasos.
 - Os jogos ficam só na memória e voltam para os 3 exemplos ao recarregar a página. Os exemplos usam a capa reserva (degradê com a inicial).
